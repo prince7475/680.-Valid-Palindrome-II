@@ -1,0 +1,149 @@
+Given a non-empty string s, you may delete at most one character. Judge whether you can make it a palindrome.
+
+Example 1:
+Input: "aba"
+Output: True
+Example 2:
+Input: "abca"
+Output: True
+Explanation: You could delete the character 'c'.
+Note:
+The string will only contain lowercase characters a-z. The maximum length of the string is 50000.
+
+Will have two
+isPalindrome --> return a boolean if the given string is a palindrome
+Main --> Loop through given str, 
+  1. if (isPalindrome(str)) return true
+  2. loop throught the given string
+    we will remove each letter from the string
+      newString = removeCurrentLetter(idx, string)
+      isPalindrome(newString) --> return true
+  3. return false
+  Time --> O(N^2)
+  Space --> O(1)
+ 
+ function validPalindrome(str){
+    if(str.length === 0) return true
+    if(isPalindrome(str)) return true // helper method
+    for(let i = 0; i < str.length; i++){
+      let currString = removeCurrLetter(i, str) // helper method
+      if(isPalindrome(currString)) return true
+    }
+    return false
+ }
+ 
+ function isPalindrome(str){
+  let left = 0
+  let right = str.length - 1
+  while(left <= right){
+    let leftV = str[left]
+    let rightV = str[right]
+    if(leftV === rightV){
+      left++
+      right--
+    }else {
+      return false
+    }
+  }
+  return true
+ }
+ 
+ 
+ function removeCurrLetter(i,str){
+    return str.substr(0, i) + str.substr(i + 1) 
+ }  
+ 
+
+
+
+
+ "abca"
+ Second Solution
+ - Have two pointers, 
+ Left = 0 // Starting pointer
+ Right = str.length - 1 // End pointer
+ let canMove = 1
+  while(left < right){
+    let leftV = str[left]
+    let rightV = str[rightV]
+    if(rightV === leftV){
+      left++
+      right--
+    }else if (rightV != leftV && canMove > 0){
+      canMove--
+      if(str[left + 1] === str[right]){
+        left++
+      }else {
+        right++
+      }
+    }else {
+      return false
+    }
+   return true
+  }
+ 
+ 
+function validPalindrome(str){
+  if(str.length === 0) return true
+  let left = 0
+  let right = str.length - 1
+  let canMove = 1
+  while(left < right){
+    let leftV = str[left]
+    let rightV = str[right]
+    if(leftV === rightV){
+      left++
+      right--
+    }else if(leftV != rightV && canMove > 0){
+    canMove--
+      if(str[left + 1] === rightV){
+        left++
+      }else {
+        right--
+      }
+    }else {
+      return false
+    }
+  }
+  
+  return true
+}
+
+
+
+
+
+
+
+function validPalindrome(str){
+  let left = 0
+  let right = str.length - 1
+  while(left < right){
+    if(str[left] != str[right]){
+      return isPalindrome(str, left + 1, right) || isPalindrome(str, left, right - 1)
+    }
+    left++
+    right--
+  }
+  return true
+}
+
+function isPalindrome(str, left, right){
+while(left < right){
+  if(str[left] != str[right]) return false
+  left++
+  right--
+}
+return true
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
